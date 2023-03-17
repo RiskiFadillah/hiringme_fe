@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { patchProfile } from "../../redux/actions/ProfileWorker";
+import { useDispatch, useSelector, connect } from "react-redux";
+import { patchProfile } from "../../../redux/actions/ProfileWorker";
 import { useParams } from "react-router-dom";
-import { getProfileById } from "../../redux/actions/ProfileWorker";
+import { getProfileById } from "../../../redux/actions/ProfileWorker";
 
 const InputFormWorker = () => {
-  const { data, error } = useSelector((state) => state.patchProfileWorkers);
+  const { data, error } = useSelector((state) => state.profileWorkers);
   console.log(data, "ini data");
   // console.log(error)
 
@@ -22,24 +22,11 @@ const InputFormWorker = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   console.log(id, "ini id");
-  const onSubmit = (e) => {
-    console.log(formEditProfile);
-    e.preventDefault();
-    const patchData = new FormData(e.target);
-    patchData.append("name", formEditProfile.namalengkap);
-    // patchData.append("email", formEditProfile.jobdesk);
-    // patchData.append("phone", formEditProfile.domisili);
-    // patchData.append("instagram", formEditProfile.instagram);
-    // patchData.append("github", formEditProfile.github);
-    // patchData.append("gitlab", formEditProfile.gitlab);
-    // patchData.append("deskripsi", formEditProfile.deskripsiSingkat);
-
-    dispatch(patchProfile(patchData, id));
-  };
-  useEffect(() => {
+  const onSubmit = (e) => {};
+  const dataProfileUser = useEffect(() => {
     dispatch(getProfileById(id));
   }, [dispatch, id]);
-
+  
   return (
     <>
       {/* Data Diri */}
@@ -53,7 +40,7 @@ const InputFormWorker = () => {
             </label>
             <input
               type="text"
-              placeholder="Type here"
+              placeholder={data ? data.name : undefined}
               className="input input-bordered w-full"
               onChange={(e) =>
                 setformEditProfile({

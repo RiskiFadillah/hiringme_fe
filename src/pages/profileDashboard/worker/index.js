@@ -1,37 +1,25 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../../../components/Footer/Footer";
 import Navbar from "../../../components/Navbar/Navbar";
-import { Link,useParams,useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Portofolio from "../../../components/poftofolio";
 import Experience from "../../../components/workExperience";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { getProfileById } from "../../../redux/actions/ProfileWorker";
-import axios from "axios";
-
-//import { useDispatch, useSelector } from "react-redux";
-// import Footer from "../../../components/Footer/Footer";
-//import { getProfileById } from "../../../redux/actions/ProfileWorker";
 
 const ProfileWorker = () => {
-  const dispatch = useDispatch();
+  const {id} = useParams();
+  const [data, setData] = useState("");
+  useEffect(() => {
+    const storageData = localStorage.getItem("@userLogin");
+    if (storageData) {
+      setData(storageData);
+    }
+  }, []);
+  console.log(data);
+  const dataUser = data ? data.user : null;
+  console.log(dataUser);
 
-  // const { data, loading, error } = useSelector((state) => state.profileWorkers);
-  // const navigate = useNavigate();
-
-  const [data, setData] = useState({})
-  console.log(data, "hallo");
-
-  // console.log(id);
   const [isToggled, setIsToggled] = useState(false);
-  // const { data, loading, error } = useSelector((state) => state.profileWorkers);
-  // // const navigate = useNavigate();
-  // console.log(data, "hallo");
 
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(getProfileById(id));
-  // }, [dispatch, id]);
   return (
     <>
       <Navbar />
@@ -137,7 +125,7 @@ const ProfileWorker = () => {
           <div>{isToggled ? <Experience /> : <Portofolio />}</div>
           <Link
             className="flex content-center mx-20 justify-center text-center py-3 border-4 border-indigo-900 bg-white text-secondary hover:text-white hover:bg-secondary font-semibold rounded-md lg:mt-20"
-            to={`/editprofilework/:id`}
+            to={`/edit-profile-work/${id}`}
           >
             Edit Profile
           </Link>

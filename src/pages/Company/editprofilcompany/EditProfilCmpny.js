@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import InputFormCmpny from "../../../components/InputFormCmpny/InputFormCmpny";
 import Navbar from "../../../components/Navbar/Navbar";
-import Profilemini from "../../../components/Profilemini/profilemini";
+import Profilemini from "../../../components/form/Profilemini/profilemini";
 import "../../../assets/css/index.css";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../../components/Footer/Footer";

@@ -1,8 +1,8 @@
 import React from "react";
 import "../../../assets/css/index.css";
-import Profilemini from "../../../components/Profilemini/profilemini";
+import Profilemini from "../../../components/form/Profilemini/profilemini";
 import Navbar from "../../../components/Navbar/Navbar";
-import InputFormWorker from "../../../components/InputForm/InputFormWorker";
+import InputFormWorker from "../../../components/form/InputFormWrk/InputFormWorker";
 import Footer from "../../../components/Footer/Footer";
 
 const EditProfileWrk = () => {

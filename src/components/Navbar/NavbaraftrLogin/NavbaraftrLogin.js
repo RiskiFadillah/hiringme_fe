@@ -95,7 +95,7 @@ const NavbaraftrLogin = ({ setIsLogin }) => {
               tabIndex={0}
               className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <li onClick={() => navigate(`/editprofilework/${id}`)}>
+              <li onClick={() => navigate(`/edit-profile-work/${id}`)}>
                 Profile
                 <span className="badge">New</span>
               </li>
@@ -127,7 +127,6 @@ const NavbaraftrLogin = ({ setIsLogin }) => {
 
 export default NavbaraftrLogin;
 
-// import React from "react";
 // import { Link } from "react-router-dom";
 // import { useEffect } from "react";
 // import { useNavigate } from "react-router-dom";

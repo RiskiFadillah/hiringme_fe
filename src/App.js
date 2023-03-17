@@ -31,8 +31,11 @@ const App = () => {
           <Route path="/hireworker/:id" element={<HireWorker />} />
           <Route path="/hirecompany/:id" element={<HireCompany />} />
           <Route path="/Login" element={<Login />} />
-          <Route path="/editprofilework/:id" element={<EditProfileWrk />} />
-          <Route path="/editprofilecompany/:id" element={<EditProfilCmpny />} />
+          <Route path="/edit-profile-work/:id" element={<EditProfileWrk />} />
+          <Route
+            path="/edit-profile-company/:id"
+            element={<EditProfilCmpny />}
+          />
           <Route path="/registworker" element={<RegistWorker />} />
           <Route path="/registcompany" element={<RegistCompany />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />

@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector, connect } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getProfileById } from "../../../redux/actions/ProfileWorker";
 
 const Profilemini = () => {
+  const { data, error } = useSelector((state) => state.profileWorkers);
   const [images, setImage] = useState("");
   const [imagePrev, setImagePrev] = useState(null);
+
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  console.log(id, "ini id");
+  const dataProfileUser = useEffect(() => {
+    dispatch(getProfileById(id));
+  }, [dispatch, id]);
 
   const onImageUpload = (e) => {
     const file = e.target.files[0];
@@ -25,7 +36,7 @@ const Profilemini = () => {
               )
             ) : (
               <img
-                src={require("../../assets/img/default.png")}
+                src={require("../../../assets/img/default.png")}
                 alt="Shoes"
                 className="rounded-full w-[10rem] h-[10rem]"
               />
@@ -40,17 +51,13 @@ const Profilemini = () => {
             </label>
           </figure>
           <div className="card-body ">
-            <h2 className="card-title">Christopher</h2>
-            <h3>Web Developer</h3>
+            <h2 className="card-title">{data ? data.name : undefined}</h2>
+            <h3>{data ? data.job_type : undefined}</h3>
             <h3>Freelance</h3>
-            <span>Alamat</span>
-            <span>089232543124</span>
+            <span>{data ? data.address : undefined}</span>
+            <span>0{data ? data.phone : undefined}</span>
             <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries,
+            {data ? data.bio : undefined}
             </p>
             <div className="items-center card-actions flex-col">
               <button className="btn btn-primary  text-white  w-[100%]">

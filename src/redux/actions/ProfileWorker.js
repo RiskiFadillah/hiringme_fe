@@ -62,7 +62,7 @@ export const getProfileById = (id) => {
   return (dispatch) => {
     dispatch(getProfileByIdRequest(id));
     return axios
-      .get(`http://localhost:5000/api/v1/users/${id}`)
+      .get(`https://gas-crack-production.up.railway.app/api/v1/users/${id}`)
       .then((res) => {
         dispatch(getProfileByIdSuccess(res.data.data));
       })
@@ -72,69 +72,5 @@ export const getProfileById = (id) => {
   };
 };
 
-// Post
 
-const postProfileSuccess = (data) => {
-  return {
-    type: "POST_ALL_DATA_PROFILE_SUCCESS",
-    payload: data,
-  };
-};
 
-const postProfileFail = (err) => {
-  return {
-    type: "POST_ALL_DATA_PROFILE_FAIL",
-    payload: err,
-  };
-};
-
-export const postProfile = (postData) => {
-  return (dispatch) => {
-    return axios({
-      method: "POST",
-      url: "http://localhost:5000/api/v1/auth/register",
-      data: postData,
-    })
-      .then((res) => {
-        dispatch(postProfileSuccess(res.data));
-      })
-      .catch((err) => {
-        dispatch(postProfileFail(err.response.data));
-      });
-  };
-};
-
-// Patch By Id
-
-const patchProfileSuccess = (data) => {
-  return {
-    type: "PATCH_ALL_DATA_PROFILE_SUCCESS",
-    payload: data,
-  };
-};
-
-const patchProfileFail = (err) => {
-  return {
-    type: "PATCH_ALL_DATA_PROFILE_FAIL",
-    payload: err,
-  };
-};
-
-export const patchProfile = (patchData, id) => {
-  return (dispatch) => {
-    return axios({
-      method: "PATCH",
-      url: `http://localhost:5000/api/v1/auth/users/${id}`,
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-      data: patchData,
-    })
-      .then((res) => {
-        dispatch(patchProfileSuccess(res.data.data));
-      })
-      .catch((err) => {
-        dispatch(patchProfileFail(err.response.data));
-      });
-  };
-};
