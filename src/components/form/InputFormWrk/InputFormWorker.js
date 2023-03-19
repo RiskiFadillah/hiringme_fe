@@ -8,7 +8,7 @@ import PengalamanWorker from "../pnglmnWrk/pnglmnWrk";
 import PortofolioWorker from "../portofolioWrk/portofolioWrk";
 import axios from "axios";
 
-const InputFormWorker = () => {
+const InputFormWorker = (props) => {
   const { data, error } = useSelector((state) => state.profileWorkers);
   const [formEditProfile, setformEditProfile] = useState({
     namalengkap: "",
@@ -29,35 +29,43 @@ const InputFormWorker = () => {
     skill: data ? data.skills : undefined,
   };
 
+  // console.log(props.userImage, "Halo ini profile image");
+
   const onSubmit = (e) => {
     e.preventDefault();
     const patchForm = {
       fullname: formEditProfile.namalengkap,
+      phone: formEditProfile.phone_number,
       jobType: formEditProfile.jobdesk,
       address: formEditProfile.domisili,
-      phone: formEditProfile.phone_number,
       instagram: formEditProfile.instagram,
       github: formEditProfile.github,
       gitlab: formEditProfile.gitlab,
       bio: formEditProfile.deskripsiSingkat,
     };
-    console.log(patchForm);
-    axios({
-      method: "PATCH",
-      // url: `https://gas-crack-production.up.railway.app/api/v1/users/${id}`,
-      url: `http://localhost:6144/api/v1/users/${id}`,
-      data: patchForm,
-      headers: {
-        "Content-Type": "multipart/form-data",
-        token: tokenUser,
-      },
-    })
-      .then((response) => {
-        console.log(response.data);
+    //console.log(data, "halo ini input");
+    if (patchForm.fullname === "" || patchForm.jobType === "") {
+      alert("Nama Lengkap dan JobType harus diisi terlebih dahulu");
+    } else {
+      console.log(patchForm);
+      axios({
+        method: "PATCH",
+        headers: {
+          "Content-Type": "multipart/form-data",
+          token: tokenUser,
+        },
+        data: patchForm,
+        // url: `http://localhost:6144/api/v1/users/${id}`,
+        url: `https://gas-crack-production.up.railway.app/api/v1/users/${id}`,
       })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((response) => {
+          console.log(response.data);
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   const dataProfileUser = useEffect(() => {
@@ -209,7 +217,7 @@ const InputFormWorker = () => {
       {/* Penglaman Kerja */}
       <PengalamanWorker userId={id} />
       {/* Portofolio */}
-      <PortofolioWorker />
+      <PortofolioWorker userId={id} />
     </>
   );
 };

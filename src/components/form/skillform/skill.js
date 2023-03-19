@@ -26,11 +26,11 @@ const SkillWorker = (props) => {
         console.log(error);
       });
   };
-
+  
   const handleDelete = (id) => {
     console.log(id, "ini id skill");
     axios
-      .delete(`http://localhost:6144/api/v1/skills/${id}`)
+      .delete(`https://gas-crack-production.up.railway.app/api/v1/skills/${id}`)
       .then((response) => {
         console.log(response.data);
         window.location.reload();

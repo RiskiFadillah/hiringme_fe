@@ -1,29 +1,87 @@
-const PortofolioWorker = () => {
+import { React, useState, useEffect } from "react";
+import axios from "axios";
+
+const PortofolioWorker = (props) => {
+  const idUser = props.userId;
+  const [images, setImage] = useState("");
+  const [imagePrev, setImagePrev] = useState(null);
+  const onImageUpload = (e) => {
+    const file = e.target.files[0];
+    setImagePrev(URL.createObjectURL(file));
+    setImage(file);
+    console.log(file, "halo");
+
+    // Perbarui nilai inputPortofolio setelah setImage
+    setInputPortofolio({
+      ...inputPortofolio,
+      image: file,
+    });
+  };
+
+  const [inputPortofolio, setInputPortofolio] = useState({
+    name: "",
+    link: "",
+    image: "",
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios({
+      method: "POST",
+      data: inputPortofolio,
+      url: `http://localhost:6144/api/v1/portfolio/${idUser}`,
+      // url: `https://gas-crack-production.up.railway.app/api/v1/portfolio/${idUser}`,
+      //
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((response) => {
+        console.log(response.data);
+        alert("Portofolio berhasil ditambahkan");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <>
       {" "}
       <section className="flex-12 shadow-xl p-7">
         <h1 className="text-xl font-bold pb-1">Portofolio</h1>
         <div className="border-b-4 mt-2 mb-[3rem] w-full"></div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="form-control w-full">
             <label className="label">
-              <span className="label-text">Nama Lengkap :</span>
+              <span className="label-text">Nama Portofolio :</span>
             </label>
             <input
               type="text"
               placeholder="Type here"
               className="input input-bordered w-full"
+              onChange={(e) =>
+                setInputPortofolio({
+                  ...inputPortofolio,
+                  name: e.target.value,
+                })
+              }
             />
           </div>
           <div className="form-control w-full pt-8">
             <label className="label">
-              <span className="label-text">Job Desk :</span>
+              <span className="label-text">Link :</span>
             </label>
             <input
               type="text"
               placeholder="Type here"
               className="input input-bordered "
+              onChange={(e) =>
+                setInputPortofolio({
+                  ...inputPortofolio,
+                  link: e.target.value,
+                })
+              }
             />
           </div>
           <div className="pt-8">
@@ -50,27 +108,45 @@ const PortofolioWorker = () => {
                   </p>
                 </span>
                 <div className="flex gap-8">
-                  <div className="flex w-[5rem] h-[5rem]">
-                    <img
-                      src={require("../../../assets/images/icon/image.png")}
-                      className="mt-10 w-[35px] h-[35px]"
-                    />
-                    <span className="text-[0.5rem] mt-10">
-                      High-Res Image PNG, JPG or GIF
-                    </span>
-                  </div>
-                  <div className="flex w-[5rem] h-[5rem]">
-                    <img
-                      src={require("../../../assets/images/icon/image.png")}
-                      className="mt-10 w-[35px] h-[35px]"
-                    />
-                    <span className="text-[0.5rem] mt-10">
-                      High-Res Image PNG, JPG or GIF
-                    </span>
-                  </div>
+                  {imagePrev ? (
+                    imagePrev && (
+                      <img
+                        src={imagePrev}
+                        alt="Portofolio"
+                        className="rounded-[2rem] w-[15rem] h-[9rem]"
+                      />
+                    )
+                  ) : (
+                    <>
+                      <div className="flex w-[5rem] h-[5rem]">
+                        <img
+                          src={require("../../../assets/images/icon/image.png")}
+                          className="mt-10 w-[35px] h-[35px]"
+                        />
+                        <span className="text-[0.5rem] mt-10">
+                          High-Res Image PNG, JPG or GIF
+                        </span>
+                      </div>
+                      <div className="flex w-[5rem] h-[5rem]">
+                        <img
+                          src={require("../../../assets/images/icon/image.png")}
+                          className="mt-10 w-[35px] h-[35px]"
+                        />
+                        <span className="text-[0.5rem] mt-10">
+                          High-Res Image PNG, JPG or GIF
+                        </span>
+                      </div>
+                    </>
+                  )}
                 </div>
               </span>
-              <input type="file" name="file_upload" className="hidden" />
+              <input
+                type="file"
+                name="file_upload"
+                className="hidden"
+                onChange={(e) => onImageUpload(e)}
+                img={imagePrev}
+              />
             </label>
           </div>
           <button

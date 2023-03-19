@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import InputFormCmpny from "../../../components/InputFormCmpny/InputFormCmpny";
+import InputFormCmpny from '../../../components/formCompany/inputFormCompany/InputFormCmpny'
 import Navbar from "../../../components/Navbar/Navbar";
 import Profilemini from "../../../components/form/Profilemini/profilemini";
 import "../../../assets/css/index.css";
